@@ -7,7 +7,7 @@ This program takes a integers and sort them, using different sorting algorithms:
 - Heap sort
 - Quick sort
 
-Kristina Håkansson, BTH 2019-04
+Kristina Hï¿½kansson, BTH 2019-04
 */
 
 #include "Functions.h"
@@ -20,6 +20,10 @@ int main()
 	int n = 10;	// (sizeof(data) / (sizeof(data[0]));
 	
 	std::cout << "Objects before sorting:\n";
+	print(data, n);
+
+	bubbleSort(data, n);
+	std::cout << "BubbleSort:\n";
 	print(data, n);
 
 	insertionSort(data, n);

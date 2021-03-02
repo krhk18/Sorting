@@ -1,5 +1,6 @@
 /*
 This program takes a integers and sort them, using different sorting algorithms:
+- Bubble sort
 - Insertion sort
 - Shell sort
 - Selection sort
@@ -7,12 +8,13 @@ This program takes a integers and sort them, using different sorting algorithms:
 - Heap sort
 - Quick sort
 
-Kristina Håkansson, BTH 2019-04
+Kristina Hï¿½kansson, BTH 2019-04
 */
 
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include <vector>
+#include <iostream>
 
 template<typename T>
 void print(T data[], int n)
@@ -22,11 +24,31 @@ void print(T data[], int n)
 	std::cout << std::endl;
 }
 
+//BUBBLE SORT
+template<typename T>
+void bubbleSort(T data[], int n)
+{
+    int temp;
+    bool madeAswap;
+
+    do {
+        madeAswap = false;
+        for(int count = 0; count < (n - 1); count++) {
+            if(data[count] > data[count + 1]) {
+                temp = data[count];
+                data[count] = data[count + 1];
+                data[count + 1] = temp;
+                madeAswap = true;
+            }
+        }
+    } while(madeAswap);
+}
+
 //INSERTION SORT
-//Bästa: O(n), medel: O(n2)
-//”Princip”: ta i tur och ordning ett element i taget och placera in...
-//...elementet på rätt plats bland redan sorterade element
-//(Kan vara bra när värdena är nästan sorterade från början, eller vid låga n.)
+//Bï¿½sta: O(n), medel: O(n2)
+//ï¿½Principï¿½: ta i tur och ordning ett element i taget och placera in...
+//...elementet pï¿½ rï¿½tt plats bland redan sorterade element
+//(Kan vara bra nï¿½r vï¿½rdena ï¿½r nï¿½stan sorterade frï¿½n bï¿½rjan, eller vid lï¿½ga n.)
 
 template<typename T>
 void insertionSort(T data[], int n)
@@ -34,22 +56,22 @@ void insertionSort(T data[], int n)
 	for (int i = 1; i < n; i++)
 	{
 		T elementToInsert = data[i];					//Spara undan talet som ska insertas
-		int j = i - 1;									//Börja jämföra med talet innan
-		while (j >= 0 && elementToInsert < data[j])		//Vandra neråt, till sista eller det undansparade värdet inte är större längre
+		int j = i - 1;									//Bï¿½rja jï¿½mfï¿½ra med talet innan
+		while (j >= 0 && elementToInsert < data[j])		//Vandra nerï¿½t, till sista eller det undansparade vï¿½rdet inte ï¿½r stï¿½rre lï¿½ngre
 		{
-			data[j + 1] = data[j];						//Skriv över värde längre till höger med det jämförda värdet.
-			j--;										//Gå ett steg ner
+			data[j + 1] = data[j];						//Skriv ï¿½ver vï¿½rde lï¿½ngre till hï¿½ger med det jï¿½mfï¿½rda vï¿½rdet.
+			j--;										//Gï¿½ ett steg ner
 		}
-		data[j + 1] = elementToInsert;					//Inserta det undansparade värdet
+		data[j + 1] = elementToInsert;					//Inserta det undansparade vï¿½rdet
 	}
 }
 
 //SHELL SORT (inkrementsekvens 3, 1)
 //O(n3/2)
-//”Princip”: utför ”insertionsort” men på följder där det finns en...
-//...bestämd distans mellan elementen, utförs upprepande med kortare...
-//...och kortare distans för att slutligen ha distansen 1.
-//Körtiden beror på inkrementsekvenserna (distanssekvenserna).
+//ï¿½Principï¿½: utfï¿½r ï¿½insertionsortï¿½ men pï¿½ fï¿½ljder dï¿½r det finns en...
+//...bestï¿½md distans mellan elementen, utfï¿½rs upprepande med kortare...
+//...och kortare distans fï¿½r att slutligen ha distansen 1.
+//Kï¿½rtiden beror pï¿½ inkrementsekvenserna (distanssekvenserna).
 template<typename T>
 void shellSort(T data[], int n)
 {
@@ -71,8 +93,8 @@ void shellSort(T data[], int n)
 }
 
 //SELECTION SORT
-//Bästa: O(n2), Medel: O(n2)
-//”Princip”: leta upp det minsta elementet bland de osorterade och...
+//Bï¿½sta: O(n2), Medel: O(n2)
+//ï¿½Principï¿½: leta upp det minsta elementet bland de osorterade och...
 //...placera det efter redan sorterade element tills alla element sorterats
 template<typename T>
 void selectionSort(T data[], int n)
@@ -92,9 +114,9 @@ void selectionSort(T data[], int n)
 //MERGE SORT
 //Devide and conquer
 //Recursive
-//”Princip”: Dela upp arrayen (halvera) till dess att det endast finns...
-//...”små” sorterade listor och fläta ihop dessa till större sorterade listor.
-//Använder extra array under sorteringen, dvs inte en in-place-algoritm
+//ï¿½Principï¿½: Dela upp arrayen (halvera) till dess att det endast finns...
+//...ï¿½smï¿½ sorterade listor och flï¿½ta ihop dessa till stï¿½rre sorterade listor.
+//Anvï¿½nder extra array under sorteringen, dvs inte en in-place-algoritm
 //O(nlogn)
 template<typename T>
 void merge(T data[], int firstIndex, int lastIndex);
@@ -170,13 +192,13 @@ void merge(T data[], int firstIndex, int lastIndex)
 }
 
 //HEAP SORT
-//In-place sortering (använder inte någon extra datastruktur,...
-//...däremot ok att använda enstaka variabler).
-//”Princip”:
-//1. Konstruera en (max-)heap för arrayen med de n element som ska sorteras (roten på index 0)
-//2. Ta bort det största från den del av arrayen som representera en heap och placera elementet i arrayen...
-//...direkt efter heapen totalt n gånger, efter varje borttaging måste heapifering (heapify) genomföras
-//I båda fallen utförs perkolering nedåt(perculateDown)
+//In-place sortering (anvï¿½nder inte nï¿½gon extra datastruktur,...
+//...dï¿½remot ok att anvï¿½nda enstaka variabler).
+//ï¿½Principï¿½:
+//1. Konstruera en (max-)heap fï¿½r arrayen med de n element som ska sorteras (roten pï¿½ index 0)
+//2. Ta bort det stï¿½rsta frï¿½n den del av arrayen som representera en heap och placera elementet i arrayen...
+//...direkt efter heapen totalt n gï¿½nger, efter varje borttaging mï¿½ste heapifering (heapify) genomfï¿½ras
+//I bï¿½da fallen utfï¿½rs perkolering nedï¿½t(perculateDown)
 
 template<typename T>
 void perculateDown(T data[], int n, int root);
@@ -225,12 +247,12 @@ void perculateDown(T data[], int n, int root)
 //QUICK SORT
 //Rekursiv 
 //Divide-and-conquer
-//"Princip” : Utför grovsortering genom att ”välja” ett element kallat pivotelement...
-//...och placera alla mindre än detta till vänster och alla större än(eller lika med) till höger.
-//...Detta upprepas på vänster och höger grovsorterade delar.
+//"Principï¿½ : Utfï¿½r grovsortering genom att ï¿½vï¿½ljaï¿½ ett element kallat pivotelement...
+//...och placera alla mindre ï¿½n detta till vï¿½nster och alla stï¿½rre ï¿½n(eller lika med) till hï¿½ger.
+//...Detta upprepas pï¿½ vï¿½nster och hï¿½ger grovsorterade delar.
 //Medelfall O(nlogn)
-//Värsta fall: O(n2)
-//Ofta används en enklare sorteringsalgoritm (ex insertionsort) för grovsorterade ”delar” som är av storlek <= 10.
+//Vï¿½rsta fall: O(n2)
+//Ofta anvï¿½nds en enklare sorteringsalgoritm (ex insertionsort) fï¿½r grovsorterade ï¿½delarï¿½ som ï¿½r av storlek <= 10.
 
 template<typename T>
 int partition(T data[], int firstIndx, int lastIndex);
