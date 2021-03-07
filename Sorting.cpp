@@ -50,7 +50,7 @@ int main()
 	std::cout << "QuickSort:\n";
 	print(data, n);
 
-	std::cin.get();
+	//std::cin.get();
 
 	return 0;
 }
